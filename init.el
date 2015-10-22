@@ -1,4 +1,4 @@
-
+(require 'package) 
 (setq user-full-name "Aaron Bedra")
 (setq user-mail-address "aaron@aaronbedra.com")
 
@@ -7,7 +7,6 @@
 (add-to-list 'exec-path (concat (getenv "GOPATH") "/bin"))
 (require 'cl)
 
-(load "package")
 (package-initialize)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
