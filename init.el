@@ -20,10 +20,12 @@
                           autopair
                           clojure-mode
                           coffee-mode
+                          color-theme
+                          color-theme-molokai
                           csharp-mode
                           deft
                           erlang
-			  exec-path-from-shell
+                          exec-path-from-shell
                           feature-mode
                           flycheck
                           gist
@@ -470,7 +472,7 @@
 (add-hook 'go-mode-hook 'go-setup)
 
 (if window-system
-    (load-theme 'solarized-light t)
+    (color-theme-molokai)
   (load-theme 'wombat t))
 
 (require 'ansi-color)
