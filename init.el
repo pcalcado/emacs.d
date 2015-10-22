@@ -23,6 +23,7 @@
                           csharp-mode
                           deft
                           erlang
+			  exec-path-from-shell
                           feature-mode
                           flycheck
                           gist
@@ -65,6 +66,8 @@
   (dolist (pkg pcalcado/packages)
     (when (not (package-installed-p pkg))
       (package-install pkg))))
+
+(exec-path-from-shell-initialize)
 
 (setq inhibit-splash-screen t
       initial-scratch-message nil
@@ -476,3 +479,4 @@
   (ansi-color-apply-on-region (point-min) (point-max))
   (toggle-read-only))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
