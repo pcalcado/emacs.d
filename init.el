@@ -1,9 +1,9 @@
 (require 'package) 
-(setq user-full-name "Aaron Bedra")
-(setq user-mail-address "aaron@aaronbedra.com")
+(setq user-full-name "Phil Calçado")
+(setq user-mail-address "pcalcado@gmail.com")
 
-(setenv "PATH" (concat "/usr/local/bin:/opt/local/bin:/usr/bin:/bin:/home/abedra/.cabal/bin" (getenv "PATH")))
-(setenv "GOPATH" (concat (getenv "HOME") "/src/golang"))
+(setenv "PATH" (concat "/usr/local/bin:/opt/local/bin:/usr/bin:/bin:/home/phil/.cabal/bin" (getenv "PATH")))
+(setenv "GOPATH" (concat (getenv "HOME") "/code"))
 (add-to-list 'exec-path (concat (getenv "GOPATH") "/bin"))
 (require 'cl)
 
@@ -15,7 +15,7 @@
 
 (setq package-archive-enable-alist '(("melpa" deft magit)))
 
-(defvar abedra/packages '(ac-slime
+(defvar pcalcado/packages '(ac-slime
                           auto-complete
                           autopair
                           clojure-mode
@@ -54,15 +54,15 @@
                           yaml-mode)
   "Default packages")
 
-(defun abedra/packages-installed-p ()
-  (loop for pkg in abedra/packages
+(defun pcalcado/packages-installed-p ()
+  (loop for pkg in pcalcado/packages
         when (not (package-installed-p pkg)) do (return nil)
         finally (return t)))
 
-(unless (abedra/packages-installed-p)
+(unless (pcalcado/packages-installed-p)
   (message "%s" "Refreshing package database...")
   (package-refresh-contents)
-  (dolist (pkg abedra/packages)
+  (dolist (pkg pcalcado/packages)
     (when (not (package-installed-p pkg))
       (package-install pkg))))
 
@@ -102,10 +102,10 @@
       visible-bell t)
 (show-paren-mode t)
 
-(defvar abedra/vendor-dir (expand-file-name "vendor" user-emacs-directory))
-(add-to-list 'load-path abedra/vendor-dir)
+(defvar pcalcado/vendor-dir (expand-file-name "vendor" user-emacs-directory))
+(add-to-list 'load-path pcalcado/vendor-dir)
 
-(dolist (project (directory-files abedra/vendor-dir t "\\w+"))
+(dolist (project (directory-files pcalcado/vendor-dir t "\\w+"))
   (when (file-directory-p project)
     (add-to-list 'load-path project)))
 
@@ -340,12 +340,12 @@
 (define-key lisp-power-map [delete] 'paredit-forward-delete)
 (define-key lisp-power-map [backspace] 'paredit-backward-delete)
 
-(defun abedra/engage-lisp-power ()
+(defun pcalcado/engage-lisp-power ()
   (lisp-power-mode t))
 
 (dolist (mode lisp-modes)
   (add-hook (intern (format "%s-hook" mode))
-            #'abedra/engage-lisp-power))
+            #'pcalcado/engage-lisp-power))
 
 (setq inferior-lisp-program "clisp")
 (setq scheme-program-name "racket")
@@ -431,7 +431,7 @@
             (writegood-mode t)
             (flyspell-mode t)))
 (setq markdown-command "pandoc --smart -f markdown -t html")
-(setq markdown-css-paths (expand-file-name "markdown.css" abedra/vendor-dir))
+(setq markdown-css-paths (expand-file-name "markdown.css" pcalcado/vendor-dir))
 
 (setq idris-interpreter-path "/usr/local/bin/idris")
 
