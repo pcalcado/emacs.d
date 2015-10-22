@@ -458,9 +458,13 @@
   (go-eldoc-setup)
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save)
-  (local-set-key (kbd "M-.") 'godef-jump))
+  (local-set-key (kbd "M-.") 'godef-jump)
+  (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
+  (local-set-key (kbd "C-c i") 'go-goto-imports)
+  (set (make-local-variable 'compile-command)
+           "go build -v && go test -v && go vet"))
 
-(add-hook 'go-mode 'go-setup)
+(add-hook 'go-mode-hook 'go-setup)
 
 (if window-system
     (load-theme 'solarized-light t)
