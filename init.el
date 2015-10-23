@@ -52,6 +52,7 @@
                           smex
                           sml-mode
                           solarized-theme
+			  tdd-mode
                           web-mode
                           writegood-mode
                           yaml-mode)
