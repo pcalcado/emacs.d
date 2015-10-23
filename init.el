@@ -468,7 +468,8 @@
   (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
   (local-set-key (kbd "C-c i") 'go-goto-imports)
   (set (make-local-variable 'compile-command)
-           "go build -v && go test -v && go vet"))
+       "go build -v && go test -v && go vet")
+  (tdd-mode))
 
 (add-hook 'go-mode-hook 'go-setup)
 
