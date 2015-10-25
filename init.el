@@ -2,11 +2,15 @@
 (setq user-full-name "Phil Calçado")
 (setq user-mail-address "pcalcado@gmail.com")
 
+(defvar pcalcado/vendor-dir (expand-file-name "vendor" user-emacs-directory))
+(add-to-list 'load-path pcalcado/vendor-dir)
+
 (setenv "PATH" (concat "/usr/local/bin:/opt/local/bin:/usr/bin:/bin:/home/phil/.cabal/bin" (getenv "PATH")))
 (setenv "GOPATH" (concat (getenv "HOME") "/code"))
 (add-to-list 'exec-path (concat (getenv "GOPATH") "/bin"))
 (require 'cl)
 
+;; packages installed via melpa/marmelade
 (package-initialize)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -45,15 +49,14 @@
                           org
                           paredit
                           php-mode
-			  protobuf-mode
                           puppet-mode
+                          protobuf-mode
                           restclient
                           rvm
                           scala-mode
                           smex
                           sml-mode
                           solarized-theme
-			  tdd-mode
                           web-mode
                           writegood-mode
                           yaml-mode)
@@ -70,6 +73,20 @@
   (dolist (pkg pcalcado/packages)
     (when (not (package-installed-p pkg))
       (package-install pkg))))
+
+;; vendorised packages
+(defvar pcalcado/vendorised-packages '("emacs-tdd"))
+
+(let ((default-directory pcalcado/vendor-dir))
+  (dolist (pkg pcalcado/vendorised-packages)
+    (dolist (file (directory-files (expand-file-name pkg) t ".+\\.elc?$"))
+      (load-file file))))
+
+;;vendorised libs
+(dolist (project (directory-files pcalcado/vendor-dir t "\\w+"))
+  (when (file-directory-p project)
+    (add-to-list 'load-path project)))
+
 
 (exec-path-from-shell-initialize)
 
@@ -109,13 +126,9 @@
       visible-bell t)
 (show-paren-mode t)
 
-(defvar pcalcado/vendor-dir (expand-file-name "vendor" user-emacs-directory))
-(add-to-list 'load-path pcalcado/vendor-dir)
 
-(dolist (project (directory-files pcalcado/vendor-dir t "\\w+"))
-  (when (file-directory-p project)
-    (add-to-list 'load-path project)))
-
+;; --- MODES CONFIG ---
+;; org-mode stuff
 (setq org-log-done t
       org-todo-keywords '((sequence "TODO" "INPROGRESS" "DONE"))
       org-todo-keyword-faces '(("INPROGRESS" . (:foreground "blue" :weight bold))))
@@ -396,6 +409,7 @@
 
 (add-to-list 'auto-mode-alist '("\\.gitconfig$" . conf-mode))
 
+;;ruby
 (add-to-list 'auto-mode-alist '("\\.hbs$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.erb$" . web-mode))
 
@@ -414,9 +428,11 @@
 
 (rvm-use-default)
 
+;;yaml
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 
+;;javascript
 (defun coffee-custom ()
   "coffee-mode-hook"
   (make-local-variable 'tab-width)
@@ -428,8 +444,11 @@
   "js-mode-hook"
   (setq js-indent-level 2))
 
+
 (add-hook 'js-mode-hook 'js-custom)
 
+
+;;markdown
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mdown$" . markdown-mode))
 (add-hook 'markdown-mode-hook
@@ -459,6 +478,7 @@
 
 (add-to-list 'auto-mode-alist '("\\.cpsa$" . cpsa-mode))
 
+;;golang
 (require 'go-autocomplete)
 
 (defun go-setup ()
@@ -474,6 +494,8 @@
 
 (add-hook 'go-mode-hook 'go-setup)
 
+
+;;display
 (if window-system
     (color-theme-molokai)
   (load-theme 'wombat t))
