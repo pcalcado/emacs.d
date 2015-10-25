@@ -45,6 +45,7 @@
                           org
                           paredit
                           php-mode
+			  protobuf-mode
                           puppet-mode
                           restclient
                           rvm
