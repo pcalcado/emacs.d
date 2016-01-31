@@ -26,8 +26,10 @@
                           coffee-mode
                           color-theme
                           color-theme-molokai
+                          spacemacs-theme
                           csharp-mode
                           deft
+                          dockerfile-mode
                           erlang
                           exec-path-from-shell
                           feature-mode
@@ -481,6 +483,9 @@
 ;;golang
 (require 'go-autocomplete)
 
+(defun golang-printf ()
+  (insert "fmt.Printf(\"->%#v\n\", )"))
+
 (defun go-setup ()
   (go-eldoc-setup)
   (setq gofmt-command "goimports")
@@ -488,8 +493,10 @@
   (local-set-key (kbd "M-.") 'godef-jump)
   (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
   (local-set-key (kbd "C-c i") 'go-goto-imports)
+  (local-set-key (kbd "C-x p") 'golang-printf)
   (set (make-local-variable 'compile-command)
-       "go build -v && go test -v && go vet")
+;       "go build -v && go test -v && go vet"
+  "make compile")
   (tdd-mode))
 
 (add-hook 'go-mode-hook 'go-setup)
@@ -507,3 +514,4 @@
   (toggle-read-only))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
+(global-linum-mode)
