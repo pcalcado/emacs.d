@@ -50,6 +50,7 @@ values."
      shell
      shell-scripts
      sql
+     terraform-mode
      themes-megapack
      yaml
      ;; syntax-checking
@@ -327,7 +328,6 @@ layers configuration. You are free to put any user code."
   (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
   (global-linum-mode)
-  (tdd-mode)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
